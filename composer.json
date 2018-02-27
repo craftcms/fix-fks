@@ -24,6 +24,9 @@
     "docs": "https://github.com/craftcms/fix-fks",
     "rss": "https://github.com/craftcms/fix-fks/commits/v2.atom"
   },
+  "require": {
+    "craftcms/cms": "^3.0.0-RC13"
+  },
   "autoload": {
     "psr-4": {
       "craft\\fixfks\\": "src/"
