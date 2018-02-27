@@ -1,0 +1,36 @@
+{
+  "name": "craftcms/fix-fks",
+  "description": "Restore missing foreign key constraints in the database.",
+  "version": "1.0.0",
+  "type": "craft-plugin",
+  "keywords": [
+    "db",
+    "database",
+    "cms",
+    "craftcms",
+    "yii2"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pixel & Tonic",
+      "homepage": "https://pixelandtonic.com/"
+    }
+  ],
+  "support": {
+    "email": "support@craftcms.com",
+    "issues": "https://github.com/craftcms/fix-fks/issues?state=open",
+    "source": "https://github.com/craftcms/fix-fks",
+    "docs": "https://github.com/craftcms/fix-fks",
+    "rss": "https://github.com/craftcms/fix-fks/commits/v2.atom"
+  },
+  "autoload": {
+    "psr-4": {
+      "craft\\fixfks\\": "src/"
+    }
+  },
+  "extra": {
+    "name": "Fix FKs",
+    "handle": "fix-fks"
+  }
+}
