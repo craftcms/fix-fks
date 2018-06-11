@@ -1,7 +1,7 @@
 {
   "name": "craftcms/fix-fks",
   "description": "Restore missing foreign key constraints in the database.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "craft-plugin",
   "keywords": [
     "db",
