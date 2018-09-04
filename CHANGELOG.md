@@ -1,5 +1,10 @@
 # Release Notes for Fik FKs
 
+## 1.0.2 - 2018-09-04
+
+### Changed
+- Improved compatibility with Craft 3.0.23.
+
 ## 1.0.1 - 2018-06-18
 
 ### Fixed
