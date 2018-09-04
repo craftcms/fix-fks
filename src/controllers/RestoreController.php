@@ -56,9 +56,8 @@ class RestoreController extends Controller
         $fields = Craft::$app->getFields()->getAllFields();
         foreach ($fields as $field) {
             if ($field instanceof Matrix) {
-                $tableName = Craft::$app->getMatrix()->getContentTableName($field);
                 $migration = new CreateMatrixContentTable([
-                    'tableName' => $tableName
+                    'tableName' => $field->contentTable
                 ]);
                 $migration->addForeignKeys();
             }
