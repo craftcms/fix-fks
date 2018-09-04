@@ -46,7 +46,8 @@ class RestoreController extends Controller
         ob_start();
 
         // Disable FK checks
-        $db->createCommand($db->getSchema()->getQueryBuilder()->checkIntegrity(false))->execute();
+        $queryBuilder = $db->getSchema()->getQueryBuilder();
+        $db->createCommand($queryBuilder->checkIntegrity(false))->execute();
 
         // Add default FKs
         (new Install())->addForeignKeys();
@@ -69,7 +70,7 @@ class RestoreController extends Controller
         }
 
         // Re-enable FK checks
-        $db->createCommand($db->getSchema()->getQueryBuilder()->checkIntegrity(true))->execute();
+        $db->createCommand($queryBuilder->checkIntegrity(true))->execute();
 
         // End the output buffer
         ob_end_clean();
