@@ -4,7 +4,7 @@ This plugin enables users to restore foreign key constraints in their database.
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0-RC13 or later.
+This plugin requires Craft CMS 3.0.23 or later.
 
 ## Installation
 
