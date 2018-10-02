@@ -1,5 +1,10 @@
 # Release Notes for Fik FKs
 
+## 1.0.2.1 - 2018-10-02
+
+### Fixed
+- Fixed an error that would occur when running the utility. ([#4](https://github.com/craftcms/fix-fks/issues/4))
+
 ## 1.0.2 - 2018-09-04
 
 ### Changed
