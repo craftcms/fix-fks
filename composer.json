@@ -21,7 +21,7 @@
     "email": "support@craftcms.com",
     "issues": "https://github.com/craftcms/fix-fks/issues?state=open",
     "source": "https://github.com/craftcms/fix-fks",
-    "docs": "https://github.com/craftcms/fix-fks",
+    "docs": "https://github.com/craftcms/fix-fks/blob/master/README.md",
     "rss": "https://github.com/craftcms/fix-fks/commits/v2.atom"
   },
   "require": {
@@ -34,6 +34,7 @@
   },
   "extra": {
     "name": "Fix FKs",
-    "handle": "fix-fks"
+    "handle": "fix-fks",
+    "documentationUrl": "https://github.com/craftcms/fix-fks/blob/master/README.md"
   }
 }
