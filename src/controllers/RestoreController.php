@@ -19,16 +19,10 @@ use craft\web\Controller;
  */
 class RestoreController extends Controller
 {
-    // Constants
-    // =========================================================================
-
     /**
      * @event \yii\base\Event The event that is triggered after all Craft FKs have been restored
      */
     const EVENT_AFTER_RESTORE_FKS = 'afterRestoreFks';
-
-    // Public Methods
-    // =========================================================================
 
     /**
      * Restore the foreign keys
