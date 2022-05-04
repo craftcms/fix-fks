@@ -3,9 +3,9 @@
 .github/ export-ignore
 .gitignore export-ignore
 CHANGELOG.md export-ignore
-composer.lock export-ignore
 LICENSE.md export-ignore
 README.md export-ignore
+composer.lock export-ignore
 
 # Auto detect text files and perform LF normalization
 * text=auto
