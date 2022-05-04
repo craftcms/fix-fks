@@ -22,7 +22,7 @@ class RestoreController extends Controller
     /**
      * @event \yii\base\Event The event that is triggered after all Craft FKs have been restored
      */
-    const EVENT_AFTER_RESTORE_FKS = 'afterRestoreFks';
+    public const EVENT_AFTER_RESTORE_FKS = 'afterRestoreFks';
 
     /**
      * Restore the foreign keys
