@@ -6,6 +6,8 @@ CHANGELOG.md export-ignore
 LICENSE.md export-ignore
 README.md export-ignore
 composer.lock export-ignore
+ecs.php export-ignore
+phpstan.neon export-ignore
 
 # Auto detect text files and perform LF normalization
 * text=auto

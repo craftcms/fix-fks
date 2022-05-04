@@ -51,7 +51,7 @@ class RestoreController extends Controller
         foreach ($fields as $field) {
             if ($field instanceof Matrix) {
                 $migration = new CreateMatrixContentTable([
-                    'tableName' => $field->contentTable
+                    'tableName' => $field->contentTable,
                 ]);
                 $migration->addForeignKeys();
             }

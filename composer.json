@@ -24,17 +24,37 @@
     "docs": "https://github.com/craftcms/fix-fks/blob/master/README.md",
     "rss": "https://github.com/craftcms/fix-fks/commits/v2.atom"
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "require": {
     "craftcms/cms": "^3.0.23"
+  },
+  "require-dev": {
+    "craftcms/ecs": "dev-main",
+    "craftcms/phpstan": "dev-main"
   },
   "autoload": {
     "psr-4": {
       "craft\\fixfks\\": "src/"
     }
   },
+  "scripts": {
+    "check-cs": "ecs check --ansi",
+    "fix-cs": "ecs check --ansi --fix",
+    "phpstan": "phpstan --memory-limit=1G"
+  },
   "extra": {
     "name": "Fix FKs",
     "handle": "fix-fks",
     "documentationUrl": "https://github.com/craftcms/fix-fks/blob/master/README.md"
+  },
+  "config": {
+    "platform": {
+      "php": "7.2.5"
+    },
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true,
+      "craftcms/plugin-installer": true
+    }
   }
 }
