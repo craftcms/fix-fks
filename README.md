@@ -26,7 +26,7 @@ cd /path/to/my-project.test
 composer require craftcms/fix-fks
 
 # tell Craft to install the plugin
-./craft install/plugin fix-fks
+./craft plugin/install fix-fks
 ```
 
 ## Usage
