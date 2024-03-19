@@ -46,14 +46,16 @@ class RestoreController extends Controller
         // Add default FKs
         (new Install())->addForeignKeys();
 
-        // Add Matrix FKs
-        $fields = Craft::$app->getFields()->getAllFields();
-        foreach ($fields as $field) {
-            if ($field instanceof Matrix) {
-                $migration = new CreateMatrixContentTable([
-                    'tableName' => $field->contentTable,
-                ]);
-                $migration->addForeignKeys();
+        if (version_compare(Craft::$app->getVersion(), '5.0.0-beta.1', '<')) {
+            // Add Matrix FKs
+            $fields = Craft::$app->getFields()->getAllFields();
+            foreach ($fields as $field) {
+                if ($field instanceof Matrix) {
+                    $migration = new CreateMatrixContentTable([
+                        'tableName' => $field->contentTable,
+                    ]);
+                    $migration->addForeignKeys();
+                }
             }
         }
 
