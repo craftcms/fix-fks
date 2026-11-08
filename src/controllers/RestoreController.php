@@ -10,6 +10,7 @@ namespace craft\fixfks\controllers;
 use Craft;
 use craft\fields\Matrix;
 use craft\fixfks\Command;
+use craft\helpers\UrlHelper;
 use craft\migrations\CreateMatrixContentTable;
 use craft\migrations\Install;
 use craft\web\Controller;
@@ -29,6 +30,13 @@ class RestoreController extends Controller
      */
     public function actionIndex()
     {
+        // Craft 6 adds its foreign keys with Laravel, which this version can’t do
+        if (version_compare(Craft::$app->getVersion(), '6.0.0-alpha', '>=')) {
+            // Back to the utility, as Craft 6 can’t render the posted page itself
+            return $this->asFailure(Craft::t('fix-fks', 'Fix FKs 2.x can’t restore foreign keys on Craft CMS 6. Update to Fix FKs 3.'))
+                ?? $this->redirect(UrlHelper::cpUrl('utilities/fix-fks'));
+        }
+
         // Swap out the Command class with our own
         $db = Craft::$app->getDb();
         $commandMap = $db->commandMap;

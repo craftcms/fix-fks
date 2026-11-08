@@ -46,6 +46,8 @@ class Utility extends \craft\base\Utility
      */
     public static function contentHtml(): string
     {
-        return Craft::$app->getView()->renderTemplate('fix-fks/_index');
+        return Craft::$app->getView()->renderTemplate('fix-fks/_index', [
+            'isCraft6' => version_compare(Craft::$app->getVersion(), '6.0.0-alpha', '>='),
+        ]);
     }
 }

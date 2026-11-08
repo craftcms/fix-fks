@@ -1,8 +1,16 @@
-<form id="query-form" method="post" action="" accept-charset="UTF-8">
-  {{ csrfInput() }}
+{% if isCraft6 %}
+  <craft-callout variant="warning">
+    {{ 'Fix FKs 2.x can’t restore foreign keys on Craft CMS 6. Update to Fix FKs 3 by running {command}.'|t('fix-fks', {
+      command: '<code>composer require craftcms/fix-fks:^3.0</code>',
+    })|raw }}
+  </craft-callout>
+{% else %}
+  <form id="query-form" method="post" action="" accept-charset="UTF-8">
+    {{ csrfInput() }}
 
-  <input type="hidden" name="action" value="fix-fks/restore">
-  <input type="submit" class="btn submit" value="Restore foreign keys">
-</form>
+    <input type="hidden" name="action" value="fix-fks/restore">
+    <input type="submit" class="btn submit" value="Restore foreign keys">
+  </form>
 
-<div id="query-result" class="field"></div>
+  <div id="query-result" class="field"></div>
+{% endif %}
