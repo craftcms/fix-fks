@@ -1,43 +1,22 @@
 <?php
-/**
- * @link https://craftcms.com/
- * @copyright Copyright (c) Pixel & Tonic, Inc.
- * @license MIT
- */
 
-namespace craft\fixfks;
+declare(strict_types=1);
 
-use craft\events\RegisterComponentTypesEvent;
-use craft\services\Utilities;
-use yii\base\Event;
+namespace CraftCms\FixFks;
+
+use CraftCms\Cms\Plugin\Plugin as BasePlugin;
+use CraftCms\FixFks\Utilities\FixFks;
 
 /**
- * Query plugin.
+ * Fix FKs plugin.
  *
  * @author Pixel & Tonic, Inc. <support@pixelandtonic.com>
- * @since 2.0
  */
-class Plugin extends \craft\base\Plugin
+class Plugin extends BasePlugin
 {
-    /**
-     * @inheritdoc
-     */
-    public function init()
-    {
-        parent::init();
+    public string $minVersionRequired = '2.0.0';
 
-        $eventName = defined(sprintf('%s::EVENT_REGISTER_UTILITY_TYPES', Utilities::class))
-            ? Utilities::EVENT_REGISTER_UTILITY_TYPES // Craft 4
-            /** @phpstan-ignore-next-line */
-            : Utilities::EVENT_REGISTER_UTILITIES; // Craft 5+
-
-        // Register our query utility.
-        Event::on(
-            Utilities::class,
-            $eventName,
-            function(RegisterComponentTypesEvent $event) {
-                $event->types[] = Utility::class;
-            }
-        );
-    }
+    protected array $utilities = [
+        FixFks::class,
+    ];
 }
