@@ -1,6 +1,6 @@
 # Release Notes for Fik FKs
 
-## Unreleased
+## 2.2.0 - 2026-11-10
 
 - Fix FKs can now be installed on Craft CMS 6 when the `craftcms/yii2-adapter` package is installed. Its utility explains how to update to Fix FKs 3, which restores foreign keys on Craft 6, instead of failing.
 
