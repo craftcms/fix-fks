@@ -6,6 +6,8 @@ This plugin enables users to restore foreign key constraints in their database.
 
 This plugin requires Craft CMS 4.0.0+ or 5.0.0+.
 
+Fix FKs 2.x can be installed on Craft CMS 6 with the `craftcms/yii2-adapter` package, but it can’t restore foreign keys there. Use Fix FKs 3 on Craft 6.
+
 ## Installation
 
 You can install this plugin from the Plugin Store or with Composer.
