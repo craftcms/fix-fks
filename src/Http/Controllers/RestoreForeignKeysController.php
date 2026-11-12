@@ -27,6 +27,13 @@ readonly class RestoreForeignKeysController
     {
         ['restored' => $restored, 'failed' => $failed] = $restorer->restore();
 
+        if ($failed !== [] && $restored !== []) {
+            return $this->asFailure(t('Restored {count, plural, =1{# foreign key} other{# foreign keys}}, but couldn’t restore these: {keys}. Check the logs for details.', [
+                'count' => count($restored),
+                'keys' => implode('; ', $failed),
+            ], 'fix-fks'));
+        }
+
         if ($failed !== []) {
             return $this->asFailure(t('Couldn’t restore these foreign keys: {keys}. Check the logs for details.', [
                 'keys' => implode('; ', $failed),

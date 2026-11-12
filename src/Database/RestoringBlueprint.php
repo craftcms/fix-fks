@@ -71,7 +71,12 @@ class RestoringBlueprint extends Blueprint
         $sqliteObjects = $this->connection instanceof SQLiteConnection ? $this->sqliteObjects() : [];
 
         try {
-            parent::build();
+            if ($this->connection instanceof PostgresConnection) {
+                // In its own transaction, so a key that can’t be added doesn’t abort one the caller started
+                $this->connection->transaction(fn () => parent::build());
+            } else {
+                parent::build();
+            }
         } catch (QueryException $e) {
             report($e);
             array_walk($foreignKeys, fn (string $foreignKey) => $this->restorer->recordFailed($foreignKey));

@@ -115,3 +115,25 @@ it('lets plugins restore their own foreign keys', function () {
 
     expect(foreignKeyColumns('fixfks_test'))->toBe(['elementId']);
 });
+
+it('reports the keys it restored and the ones it couldn’t', function () {
+    actingAs(User::find()->admin()->one());
+    Schema::table(Table::ENTRIES, fn (Blueprint $table) => $table->dropForeign(['sectionId']));
+    Schema::create('fixfks_test', function (Blueprint $table) {
+        $table->id();
+    });
+
+    // A key on a column that doesn’t exist fails on every database
+    Event::listen(ForeignKeysRestoring::class, function () {
+        Schema::table('fixfks_test', fn (Blueprint $table) => $table->foreign('missingId')->references('id')->on(Table::ELEMENTS));
+    });
+
+    postJson(RESTORE_URL)
+        ->assertJsonPath('message', 'Restored 1 foreign key, but couldn’t restore these: fixfks_test.missingId. Check the logs for details.');
+
+    expect(foreignKeyColumns(Table::ENTRIES))->toContain('sectionId');
+
+    // With nothing else missing, only the failure is reported
+    postJson(RESTORE_URL)
+        ->assertJsonPath('message', 'Couldn’t restore these foreign keys: fixfks_test.missingId. Check the logs for details.');
+});
