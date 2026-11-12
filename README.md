@@ -1,10 +1,12 @@
 # Fix FKs utility for Craft CMS
 
-This plugin enables users to restore foreign key constraints in their database.
+This plugin restores foreign key constraints that are missing from your Craft database, such as after restoring a backup that was made without them, or after importing a database dump by hand.
 
 ## Requirements
 
-This plugin requires Craft CMS 4.0.0+ or 5.0.0+.
+Fix FKs 3.x requires Craft CMS 6.0 or later and PHP 8.5 or later. It works with MySQL, PostgreSQL and SQLite.
+
+For Craft 4 and 5, use Fix FKs 2.x.
 
 ## Installation
 
@@ -12,7 +14,7 @@ You can install this plugin from the Plugin Store or with Composer.
 
 #### From the Plugin Store
 
-Go to the Plugin Store in your project’s Control Panel and search for “Fix FKs”. Then click on the “Install” button in its modal window.
+Go to the Plugin Store in your project’s control panel and search for “Fix FKs”. Then click on the “Install” button in its modal window.
 
 #### With Composer
 
@@ -26,9 +28,44 @@ cd /path/to/my-project.test
 composer require craftcms/fix-fks
 
 # tell Craft to install the plugin
-./craft plugin/install fix-fks
+php artisan craft:plugin:install fix-fks
 ```
 
 ## Usage
 
-Run the restore operation by navigating to Utilities → Fix FKs in the Control Panel.
+Back up your database first. Then go to Utilities → Fix FKs in the control panel and press “Restore foreign keys”.
+
+The utility adds each of Craft’s foreign keys that is missing, and leaves existing ones alone. It reports how many keys it restored, and lists any it couldn’t add, with details in the logs.
+
+Rows that point to records that no longer exist don’t stop a key from being restored:
+
+- On MySQL, the key is added without checking existing rows, as MySQL does when foreign key checks are disabled.
+- On PostgreSQL, the key is added as `NOT VALID`, then validated. If existing rows break it, it stays unvalidated: it still applies to new and updated rows.
+
+Run `php artisan craft:gc:run` afterwards to delete rows that point to deleted records.
+
+On SQLite, adding a foreign key rebuilds the table. The utility recreates the table’s indexes and triggers as they were.
+
+## Restoring plugin foreign keys
+
+Plugins can restore their own foreign keys by listening for `CraftCms\FixFks\Events\ForeignKeysRestoring`. It’s dispatched after Craft’s keys are restored. Add your keys with `Schema::table()`, as your install migration does. Keys that already exist are skipped, so the listener can add all of them:
+
+```php
+use CraftCms\FixFks\Events\ForeignKeysRestoring;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Schema;
+
+public function boot(): void
+{
+    Event::listen(ForeignKeysRestoring::class, function () {
+        Schema::table('myplugin_widgets', function (Blueprint $table) {
+            $table->foreign('entryId')->references('id')->on('entries')->cascadeOnDelete();
+        });
+    });
+}
+```
+
+If your install migration keeps its keys in an `addForeignKeys()` method, the listener can call it as-is: `fn () => $this->createInstallMigration()?->addForeignKeys()`.
+
+The listener only runs when Fix FKs is installed, so the plugin doesn’t need to require it.

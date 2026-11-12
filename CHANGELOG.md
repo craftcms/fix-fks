@@ -1,4 +1,18 @@
-# Release Notes for Fik FKs
+# Release Notes for Fix FKs
+
+## 3.0.0 - 2026-11-12
+
+- Fix FKs now requires Craft CMS 6.0 or later and PHP 8.5 or later, and runs natively on Craft 6 without the `craftcms/yii2-adapter` package.
+- The plugin’s classes moved from the `craft\fixfks` namespace to `CraftCms\FixFks`. ([UPGRADE.md](UPGRADE.md))
+- Added `CraftCms\FixFks\Events\ForeignKeysRestoring`, which replaces `craft\fixfks\controllers\RestoreController::EVENT_AFTER_RESTORE_FKS`.
+- The utility now reports how many foreign keys it restored, and which ones it couldn’t restore.
+- Foreign keys can now be restored on PostgreSQL when existing rows reference deleted records.
+- Added SQLite support.
+- Fixed a bug where database triggers could stay disabled on PostgreSQL if restoring foreign keys failed.
+
+## 2.2.0 - 2026-11-10
+
+- Fix FKs can now be installed on Craft CMS 6 when the `craftcms/yii2-adapter` package is installed. Its utility explains how to update to Fix FKs 3, which restores foreign keys on Craft 6, instead of failing.
 
 ## 2.1.0 - 2024-03-19
 

@@ -1,0 +1,12 @@
+<form method="post" accept-charset="UTF-8" class="flex flex-col items-start gap-4">
+  {{ csrfInput() }}
+  {{ actionInput('fix-fks/restore') }}
+
+  <p>{{ 'Adds any of Craft’s foreign key constraints that are missing from the database. Plugins can restore theirs, too. Back up your database first.'|t('fix-fks') }}</p>
+
+  {{ ui('button', {
+    type: 'submit',
+    label: 'Restore foreign keys'|t('fix-fks'),
+    variant: 'primary',
+  }) }}
+</form>
