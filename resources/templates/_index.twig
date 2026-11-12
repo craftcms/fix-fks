@@ -1,4 +1,4 @@
-<form method="post" accept-charset="UTF-8" class="grid gap-4 justify-items-start">
+<form method="post" accept-charset="UTF-8" class="flex flex-col items-start gap-4">
   {{ csrfInput() }}
   {{ actionInput('fix-fks/restore') }}
 
@@ -7,6 +7,6 @@
   {{ ui('button', {
     type: 'submit',
     label: 'Restore foreign keys'|t('fix-fks'),
-    attributes: {class: ['submit']},
+    variant: 'primary',
   }) }}
 </form>

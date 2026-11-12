@@ -48,16 +48,24 @@ On SQLite, adding a foreign key rebuilds the table. The utility recreates the ta
 
 ## Restoring plugin foreign keys
 
-Plugins can restore their own foreign keys by listening for `CraftCms\FixFks\Events\ForeignKeysRestoring`. It’s dispatched after Craft’s keys are restored. Keys the listener adds with `Schema::table()` are only added if they’re missing, so a plugin can call its install migration’s `addForeignKeys()` method as-is:
+Plugins can restore their own foreign keys by listening for `CraftCms\FixFks\Events\ForeignKeysRestoring`. It’s dispatched after Craft’s keys are restored. Add your keys with `Schema::table()`, as your install migration does. Keys that already exist are skipped, so the listener can add all of them:
 
 ```php
 use CraftCms\FixFks\Events\ForeignKeysRestoring;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Schema;
 
 public function boot(): void
 {
-    Event::listen(ForeignKeysRestoring::class, fn () => $this->createInstallMigration()?->addForeignKeys());
+    Event::listen(ForeignKeysRestoring::class, function () {
+        Schema::table('myplugin_widgets', function (Blueprint $table) {
+            $table->foreign('entryId')->references('id')->on('entries')->cascadeOnDelete();
+        });
+    });
 }
 ```
+
+If your install migration keeps its keys in an `addForeignKeys()` method, the listener can call it as-is: `fn () => $this->createInstallMigration()?->addForeignKeys()`.
 
 The listener only runs when Fix FKs is installed, so the plugin doesn’t need to require it.
